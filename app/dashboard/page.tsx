@@ -14,7 +14,7 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { createClient } from "@/utils/supabase/server"
-
+import { redirect } from "next/navigation"
 export default async function Page() {
 
   const supabase = await createClient();
@@ -25,14 +25,10 @@ export default async function Page() {
 
   if (!user) {
     // If the user is not authenticated, redirect to the login page
-    return {
-      redirect: {
-        destination: "/login",
-        permanent: false,
-      },
-    }
+    return redirect("/login")
+    
   }
-  
+
   return (
     <SidebarProvider>
       <AppSidebar />
