@@ -1,7 +1,9 @@
-import { cn } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { loginPassword } from "@/lib/auth";
+import { SubmitButton } from "../submit-button";
 
 export function LoginForm({
   className,
@@ -18,7 +20,12 @@ export function LoginForm({
       <div className="grid gap-6">
         <div className="grid gap-2">
           <Label htmlFor="email">Email</Label>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <Input
+            name="email"
+            type="email"
+            placeholder="m@example.com"
+            required
+          />
         </div>
         <div className="grid gap-2">
           <div className="flex items-center">
@@ -30,11 +37,20 @@ export function LoginForm({
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            name="password"
+            type="password"
+            placeholder="Your password"
+            required
+          />
         </div>
-        <Button type="submit" className="w-full">
+        <SubmitButton
+          formAction={loginPassword}
+          type="submit"
+          className="w-full"
+        >
           Login
-        </Button>
+        </SubmitButton>
         <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">
           <span className="relative z-10 bg-background px-2 text-muted-foreground">
             Or continue with
@@ -57,5 +73,5 @@ export function LoginForm({
         </a>
       </div>
     </form>
-  )
+  );
 }

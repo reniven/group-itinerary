@@ -1,39 +1,55 @@
-import { supabase } from './supabase'
+"use server";
 
-export async function signUp(email: string, password: string) {
+import { createClient } from "@/utils/supabase/server";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+
+
+export async function signUp(formData: FormData) {
+  const email = formData.get("email") as string;
+  const password = formData.get("password") as string;
+
+  const supabase = await createClient();
+
   const { data, error } = await supabase.auth.signUp({
     email,
-    password,
-  })
-  
-  if (error) throw error
-  return data
+    password
+  });
+
+  if(error) {
+    // Handle error, e.g., show an error message
+    console.error("Sign up error: ", error.message);
+  } else {
+    // Redirect to a confirmation page or show a success message 
+    redirect("/auth/confirm")
+  }
 }
 
-export async function signIn(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({
+export async function signUpOAuth() {
+
+}
+
+export async function loginPassword(formData: FormData) {
+  const email = formData.get("email") as string
+  const password = formData.get("password") as string;
+
+  const supabase = await createClient();
+
+  const { error } = await supabase.auth.signInWithPassword({
     email,
     password,
-  })
-  
-  if (error) throw error
-  return data
+  });
+
+  if (error) {
+    // Handle error, e.g., show an error message
+    console.error("Login error: ", error.message);
+  } else {
+    // Redirect
+    redirect("/");
+  }
 }
 
 export async function signOut() {
-  const { error } = await supabase.auth.signOut()
-  if (error) throw error
+  const supabase = await createClient();
+  await supabase.auth.signOut();
 }
-
-export async function getCurrentUser() {
-  const { data: { user }, error } = await supabase.auth.getUser()
-  if (error) throw error
-  return user
-}
-
-// Function to invite a user by email
-export async function inviteUser(email: string) {
-  const { data, error } = await supabase.auth.admin.inviteUserByEmail(email)
-  if (error) throw error
-  return data
-} 
