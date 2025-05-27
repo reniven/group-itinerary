@@ -45,7 +45,7 @@ export async function loginPassword(formData: FormData) {
     console.error("Login error: ", error.message);
   } else {
     // Redirect
-    redirect("/");
+    redirect("/dashboard");
   }
 }
 

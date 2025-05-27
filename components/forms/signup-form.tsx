@@ -38,7 +38,12 @@ export function SignupForm({
             required
           />
         </div>
-        <SubmitButton formAction={signUp} type="submit" className="w-full">
+        <SubmitButton
+          formAction={signUp}
+          pendingText="Signing up..."
+          type="submit"
+          className="w-full"
+        >
           Sign up
         </SubmitButton>
         <div className="relative text-center text-sm after:absolute after:inset-0 after:top-1/2 after:z-0 after:flex after:items-center after:border-t after:border-border">

@@ -46,6 +46,7 @@ export function LoginForm({
         </div>
         <SubmitButton
           formAction={loginPassword}
+          pendingText="Logging in..."
           type="submit"
           className="w-full"
         >
